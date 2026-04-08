@@ -64,7 +64,7 @@ return false;*/
 
 }
 
-        public bool IsAnagram(string s, string t)
+        public static bool IsAnagram(string s, string t)
         {
             if (s == null || t == null)
                 return false;
@@ -87,6 +87,40 @@ return false;*/
             }
             bool areEqual = DictionaryOne.OrderBy(kv => kv.Key).SequenceEqual(DictionaryTwo.OrderBy(kv => kv.Key));
             return areEqual;
+        }
+
+        public static  bool IsValidSudoku(char[][] board)
+        {
+            Dictionary<int, HashSet<char>> cols = new Dictionary<int, HashSet<char>>();
+            Dictionary<int, HashSet<char>> rows = new Dictionary<int, HashSet<char>>();
+            Dictionary<string, HashSet<char>> squares = new Dictionary<string, HashSet<char>>();
+
+            for (int r = 0; r < 9 ; r++)
+            {
+                for (int c = 0; c<9;c++)
+                {
+                    if (board[r][c] == '.') continue;
+                    string squere = (r / 3) + "," + (c / 3);
+
+                    if ((rows.ContainsKey(r) && rows[r].Contains(board[r][c])) ||
+                        (cols.ContainsKey(c) && cols[c].Contains(board[r][c])) ||
+                        (squares.ContainsKey(squere) && squares[squere].Contains(board[r][c])))
+                    {
+                        return false;
+                    }
+
+                    if (!rows.ContainsKey(r)) rows[r] = new HashSet<char>();
+                    if (!cols.ContainsKey(c)) cols[c] = new HashSet<char>();
+                    if (!squares.ContainsKey(squere)) squares[squere] = new HashSet<char>();
+
+                    rows[r].Add(board[r][c]);
+                    cols[c].Add(board[r][c]);
+                    squares[squere].Add(board[r][c]);
+
+                }
+            }
+            return true;
+
         }
 
 
