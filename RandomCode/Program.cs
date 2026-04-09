@@ -8,8 +8,9 @@ namespace RandomCode
         {
             string []strs = { "bat", "bag", "bank", "band" };
             int []nums = { 1, 2, 3, 4 , 2};
+            string s = "Was it a car or a cat I saw?";
 
-            var awnser = hasDuplicate(nums);
+            var awnser = IsPalindrome(s);
             Console.WriteLine(awnser);
         }
 
@@ -123,7 +124,49 @@ return false;*/
 
         }
 
+        public static bool IsPalindrome(string s)
+        {
+            int Start = 0;
+            int End = s.Length - 1;
+            while (Start < End)
+            {
+                while (Start < End && !char.IsLetterOrDigit(s[Start]))
+                {
+                    Start++; 
+                }
+                while (Start < End && !char.IsLetterOrDigit(s[End]))
+                {
+                    End--;
+                }
+                char left = char.ToLowerInvariant(s[Start]);
+                char right = char.ToLowerInvariant(s[End]);
 
+                if (left != right)
+                    return false;
+
+                Start++;
+                End--;
+            }
+            return true;
+        }
+
+        public static int[] TwoSum(int[] numbers, int target)
+        {
+            int left = 0;
+            int right = numbers.Length - 1;
+            while (left < right)
+            {
+                int sum = numbers[left]+numbers[right];
+
+                if (sum > target)
+                    right--;
+                if (sum < target)
+                    left++;
+                if (sum == target)
+                   return new int[] { left+1, right+1 };
+            }
+            return new int[] { 0, 0 };
+        }
         #endregion
 
     }
