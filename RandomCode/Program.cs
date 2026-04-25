@@ -7,10 +7,10 @@ namespace RandomCode
         static void Main(string[] args)
         {
             string []strs = { "bat", "bag", "bank", "band" };
-            int []nums = { 1, 2, 3, 4 , 2};
+            int []nums = {1 , 7, 2, 5, 12, 3, 500, 500, 7, 8, 4, 7, 3, 6 };
             string s = "Was it a car or a cat I saw?";
 
-            var awnser = IsPalindrome(s);
+            var awnser = MaxArea(nums);
             Console.WriteLine(awnser);
         }
 
@@ -167,6 +167,57 @@ return false;*/
             }
             return new int[] { 0, 0 };
         }
+
+        public static int MaxArea(int[] heights)
+        {
+            int left = 0;
+            int right = heights.Length - 1;
+            int maxArea = 0;
+            while (left < right)
+            {
+                int area = 0;
+                if (heights[left] > heights[right])
+                {
+                    area = heights[right] * (right - left);
+                    right--;
+                }
+                else if (heights[left] <= heights[right])
+                {
+                    area = heights[left] * ( right - left);
+                    left++;
+                }
+                if (area > maxArea)
+                    maxArea = area;
+            }
+            return maxArea;
+        }
+
+        public static int MaxAreax(int[] heights)
+        {
+            int left = 0;
+            int right = heights.Length - 1;
+            int maxArea = 0;
+
+            while (left < right)
+            {
+                int width = right - left;
+                int height = Math.Min(heights[left], heights[right]);
+
+                int area = width * height;
+
+                if (area > maxArea)
+                    maxArea = area;
+
+                if (heights[left] < heights[right])
+                    left++;
+                else
+                    right--;
+            }
+
+            return maxArea;
+        }
+
+
         #endregion
 
     }
