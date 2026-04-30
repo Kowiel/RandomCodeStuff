@@ -7,10 +7,10 @@ namespace RandomCode
         static void Main(string[] args)
         {
             string []strs = { "bat", "bag", "bank", "band" };
-            int []nums = {1 , 7, 2, 5, 12, 3, 500, 500, 7, 8, 4, 7, 3, 6 };
+            int []nums = { 1, -1, -1, 0 };
             string s = "Was it a car or a cat I saw?";
 
-            var awnser = MaxArea(nums);
+            var awnser = ThreeSum(nums);
             Console.WriteLine(awnser);
         }
 
@@ -217,8 +217,43 @@ return false;*/
             return maxArea;
         }
 
+        public static List<List<int>> ThreeSum(int[] nums)
+        {
+            Array.Sort(nums);
+            List<List<int>> res = new List<List<int>>();
 
-        #endregion
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] > 0) break;
+                if (i > 0 && nums[i] == nums[i - 1]) continue;
 
-    }
+                int left = i + 1;
+                int right = nums.Length - 1;
+                while (left < right)
+                {
+                    int sum = nums[i] + nums[left] + nums[right];
+                    if (sum > 0)
+                    {
+                        right--;
+                    }
+                    else if (sum<0)
+                        left++;
+                    else
+                    {
+                        res.Add(new List<int> { nums[i], nums[left], nums[right] });
+                        left++;
+                        right--;
+                        while (left < right && nums[left] == nums[left - 1])
+                        {
+                            left++;
+                        }
+                    }
+                }
+            }
+            return res;
+
+        }
+            #endregion
+
+        }
 }
