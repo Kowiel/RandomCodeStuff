@@ -8,7 +8,7 @@ namespace RandomCode
         {
             string []strs = { "bat", "bag", "bank", "band" };
             int []nums = { 1, -1, -1, 0 };
-            string s = "Was it a car or a cat I saw?";
+            string Teststring = "Was it a car or a cat I saw?";
 
             var awnser = ThreeSum(nums);
             Console.WriteLine(awnser);
