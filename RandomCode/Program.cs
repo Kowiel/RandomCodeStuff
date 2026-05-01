@@ -8,10 +8,10 @@ namespace RandomCode
         static void Main(string[] args)
         {
             string []strs = { "bat", "bag", "bank", "band" };
-            int []nums = { 1, -1, -1, 0 };
+            int []nums = { 30, 38, 30, 36, 35, 40, 28 };
             string Teststring = "([{}])";
 
-            var awnser = IsValid(Teststring);
+            var awnser = DailyTemperatures(nums);
             Console.WriteLine(awnser);
         }
 
@@ -316,7 +316,25 @@ return false;*/
             return stack.Pop();
         }
 
+        public static int[] DailyTemperatures(int[] temperatures)
+        {
+            int n = temperatures.Length;
+            int[] result = new int[n];
 
+            Stack<int[]> stack = new Stack<int[]>();
+            for (int i = 0; i < n; i++)
+            {
+                int temp = temperatures[i];
+                while(stack.Count>0 && temp > stack.Peek()[1])
+                {
+                    int[] pair = stack.Pop();
+                    result[pair[0]] = i - pair[0];
+                }
+
+                stack.Push(new int[] { i, temp });
+            }
+            return result;
+        }
     }
 
     public class MinStack
