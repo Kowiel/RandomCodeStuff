@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Metrics;
+﻿using System.Collections;
+using System.Diagnostics.Metrics;
 
 namespace RandomCode
 {
@@ -8,9 +9,9 @@ namespace RandomCode
         {
             string []strs = { "bat", "bag", "bank", "band" };
             int []nums = { 1, -1, -1, 0 };
-            string Teststring = "Was it a car or a cat I saw?";
+            string Teststring = "([{}])";
 
-            var awnser = ThreeSum(nums);
+            var awnser = IsValid(Teststring);
             Console.WriteLine(awnser);
         }
 
@@ -253,7 +254,108 @@ return false;*/
             return res;
 
         }
-            #endregion
+        #endregion
+        public static bool IsValid(string s)
+        {
+            if (s.Length % 2 != 0)
+                return false;
 
+            var openStack = new Stack<char>();
+            Dictionary<char,char> dict = new Dictionary<char, char> 
+            {
+                {')','('}, // ( )
+                {']','['}, // [ ]
+                {'}','{'}  // { }
+            };
+
+            foreach(char  c in s)
+            {
+                if (dict.ContainsKey(c))
+                {
+                    if (openStack.Count > 0 && openStack.Peek() == dict[c])
+                    {
+                        openStack.Pop();
+                    }
+                    else
+                        return false;
+                }
+                else 
+                    openStack.Push(c);  
+            }
+            return openStack.Count == 0;
         }
+
+        public static int EvalRPN(string[] tokens)
+        {
+            Stack<int> stack = new Stack<int>();
+            foreach (string token in tokens)
+            {
+                switch (token)
+                {
+                    case "+":
+                        stack.Push(stack.Pop() + stack.Pop());
+                        break;
+                    case "-":
+                        int a = stack.Pop();
+                        int b = stack.Pop();
+                        stack.Push(b - a);
+                        break;
+                    case "*":
+                        stack.Push(stack.Pop() * stack.Pop());
+                        break;
+                    case "/":
+                        int c = stack.Pop();
+                        int d = stack.Pop();
+                        stack.Push((int)((double)d / c));
+                        break;
+                    default:
+                        stack.Push(Convert.ToInt32(token));
+                        break;
+                }
+            }
+            return stack.Pop();
+        }
+
+
+    }
+
+    public class MinStack
+    {
+
+        public Stack<int> MainStack { get; set; }
+        public Stack<int> MinNumStack { get; set; }
+
+        public MinStack()
+        {
+            MainStack = new Stack<int>();
+            MinNumStack = new Stack<int>();
+        }
+
+        public void Push(int val)
+        {
+            MainStack.Push(val);
+            if (MinNumStack.Count == 0 || MinNumStack.Peek() >= val)
+                MinNumStack.Push(val);
+        }
+
+        public void Pop()
+        {
+            var i = MainStack.Pop();
+            if (MinNumStack.Peek() == i)
+                MinNumStack.Pop();
+        }
+
+        public int Top()
+        {
+            return MainStack.Peek();
+        }
+
+        public int GetMin()
+        {
+            return MinNumStack.Peek();
+        }
+    }
+
+
+
 }
