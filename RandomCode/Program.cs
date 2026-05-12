@@ -8,10 +8,10 @@ namespace RandomCode
         static void Main(string[] args)
         {
             string []strs = { "bat", "bag", "bank", "band" };
-            int []nums = { 30, 38, 30, 36, 35, 40, 28 };
+            int []nums = { -1, 0, 2, 4, 6, 8 };
             string Teststring = "([{}])";
 
-            var awnser = DailyTemperatures(nums);
+            var awnser = Search(nums,4);
             Console.WriteLine(awnser);
         }
 
@@ -334,6 +334,23 @@ return false;*/
                 stack.Push(new int[] { i, temp });
             }
             return result;
+        }
+
+        public static int Search(int[] nums, int target)
+        {
+            int left = 0;
+            int right = nums.Length - 1;
+            while (left <= right)
+            {
+                int Midle = left + ((right - left) >> 1);
+                if (nums[Midle] == target)
+                    return Midle;
+                if (nums[Midle] > target)
+                    right = Midle - 1;
+                else
+                    left = Midle+1;
+            }
+            return -1;
         }
     }
 
