@@ -352,6 +352,44 @@ return false;*/
             }
             return -1;
         }
+
+        public static  bool SearchMatrix(int[][] matrix, int target)
+        {
+            int Rows = matrix.Length;
+            int Col = matrix[0].Length;
+
+            int top = 0;
+            int bottom = Rows - 1;
+            int Targetrow = 0;
+            while(top<=bottom)
+            {
+                Targetrow= top + ((bottom - top) >> 1);
+                if (target < matrix[Targetrow][0])
+                    bottom = Targetrow - 1;
+                else if (target > matrix[Targetrow][Col - 1])
+                    top = Targetrow + 1;
+                else
+                    break;
+                    
+            }
+            if(top>bottom)
+                return false;
+
+            int left = 0;
+            int right = matrix[Targetrow].Length - 1;
+            while (left <= right)
+            {
+                int Midle= left + ((right - left) >> 1);
+                if (target == matrix[Targetrow][Midle])
+                    return true;
+                if (target < matrix[Targetrow][Midle])
+                    right = Midle - 1;
+                else
+                    left= Midle+1;
+            }
+            return false;
+
+        }
     }
 
     public class MinStack
