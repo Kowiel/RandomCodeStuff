@@ -8,10 +8,10 @@ namespace RandomCode
         static void Main(string[] args)
         {
             string []strs = { "bat", "bag", "bank", "band" };
-            int []nums = { -1, 0, 2, 4, 6, 8 };
+            int []nums = { 2, 4, 5, 3, 1, 2 };
             string Teststring = "([{}])";
 
-            var awnser = Search(nums,4);
+            var awnser = ReplaceElements(nums);
             Console.WriteLine(awnser);
         }
 
@@ -390,7 +390,55 @@ return false;*/
             return false;
 
         }
+
+        public static int FindMaxConsecutiveOnes(int[] nums)
+        {
+            int maxAperance = 0;
+            int aperance = 0;
+            foreach(int x in nums)
+            {
+                if(x ==1)
+                    aperance++;
+                else if(x ==0)
+                {
+
+                    if (aperance > maxAperance)
+                        maxAperance = aperance;
+                    aperance = 0;
+                }
+            }
+            return Math.Max(maxAperance, aperance);
+        }
+
+        public static int[] ReplaceElements(int[] arr)
+        {
+            int[] awnser= new int[arr.Length];
+            awnser[awnser.Length - 1] = -1;
+            for(int i =0; i <awnser.Length-1;i++)
+            {
+                int x = i + 1;
+                awnser[i] = arr[x..].Max();
+            }
+            return awnser;
+        }
+
+        public int[] ReplaceElements2(int[] arr)
+        {
+            int n = arr.Length;
+            int[] ans = new int[n];
+            int rightMax = -1;
+            for (int i = n - 1; i >= 0; i--)
+            {
+                ans[i] = rightMax;
+                rightMax = Math.Max(arr[i], rightMax);
+            }
+            return ans;
+        }
+
+
     }
+
+
 
     public class MinStack
     {
