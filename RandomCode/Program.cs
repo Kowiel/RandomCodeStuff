@@ -7,11 +7,11 @@ namespace RandomCode
     {
         static void Main(string[] args)
         {
-            string []strs = { "bat", "bag", "bank", "band" };
+            string []strs = { "5", "D", "+", "C" };
             int []nums = { 2, 4, 5, 3, 1, 2 };
             string Teststring = "([{}])";
 
-            var awnser = ReplaceElements(nums);
+            var awnser = CalPoints(strs);
             Console.WriteLine(awnser);
         }
 
@@ -435,10 +435,38 @@ return false;*/
             return ans;
         }
 
+        public static int CalPoints(string[] operations)
+        {
+            Stack<int> baseball = new Stack<int>();
 
+            foreach (string op in operations)
+            {
+                switch (op)
+                {
+                    case "+":
+                        int first = baseball.Pop();
+                        int second = baseball.Peek();
+                        baseball.Push(first);
+                        baseball.Push(first + second);
+                        break;
+
+                    case "C":
+                        baseball.Pop();
+                        break;
+
+                    case "D":
+                        baseball.Push(baseball.Peek() * 2);
+                        break;
+
+                    default:
+                        baseball.Push(int.Parse(op));
+                        break;
+                }
+            }
+
+            return baseball.Sum();
+        }
     }
-
-
 
     public class MinStack
     {
