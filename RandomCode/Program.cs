@@ -466,7 +466,34 @@ return false;*/
 
             return baseball.Sum();
         }
+
+        public int MinEatingSpeed(int[] piles, int h)
+        {
+            int left = 1;
+            int right = piles.Max();
+            int MinSpeed = right;
+
+            while (left <= right)
+            {
+                int middle = left + ((right - left) >> 1);
+                int Speed = 0;
+                foreach (int i in piles)
+                {
+                    Speed += (int)Math.Ceiling((double)i / middle);
+                }
+                if (Speed <= h)
+                {
+                    MinSpeed=middle;
+                    right = middle-1;
+                }
+                else 
+                    left = middle+1;
+
+            }
+            return MinSpeed;
+        }
     }
+
 
     public class MinStack
     {
