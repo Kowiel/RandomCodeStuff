@@ -7,13 +7,71 @@ namespace RandomCode
     {
         static void Main(string[] args)
         {
-            string []strs = { "5", "D", "+", "C" };
-            int []nums = { 2, 4, 5, 3, 1, 2 };
-            string Teststring = "([{}])";
+            //string []strs = { "5", "D", "+", "C" };
+            //int []nums = { 2, 4, 5, 3, 1, 2 };
+            //string Teststring = "([{}])";
 
-            var awnser = CalPoints(strs);
-            Console.WriteLine(awnser);
+            //var awnser = CalPoints(strs);
+            //Console.WriteLine(awnser);
+
+            var head1 = LinkedListTester.FromArray(new[] { 0, 1, 2, 3 });
+            var head2 = LinkedListTester.FromArray(new[] { 0, 1, 2, 3 });
+
+            Console.WriteLine("Before:");
+            LinkedListTester.Print(head1);
+            LinkedListTester.Print(head2);
+
+            var result = new Solution().MergeTwoLists(head1, head2);
+
+            Console.WriteLine("After:");
+            LinkedListTester.Print(result);
         }
+        #region LinkedLists
+
+        public class Solution
+        {
+            public ListNode ReverseList(ListNode head)
+            {
+                ListNode prev = null;
+                while(head!=null)
+                {
+                    ListNode Temp = head.next;
+                    head.next = prev;
+                    prev=head;
+                    head = Temp;
+                }
+                return prev;
+            }
+
+            public ListNode MergeTwoLists(ListNode list1, ListNode list2)
+            {
+                var StartNode = new ListNode();
+                var MovingNode = StartNode;
+                while(list1!= null && list2!= null)
+                {
+                    if(list1.val<list2.val)
+                    {
+                        MovingNode.next = list1;
+                        list1=list1.next;
+                    }
+                    else
+                    {
+                        MovingNode.next = list2;
+                        list2 = list2.next;
+                    }
+                    MovingNode = MovingNode.next;
+                }
+                if (list1 == null)
+                    MovingNode.next = list2;
+                else
+                    MovingNode.next = list1;
+
+                return StartNode.next;
+            }
+        }
+
+        #endregion
+
 
         #region Stuff
 
@@ -492,6 +550,7 @@ return false;*/
             }
             return MinSpeed;
         }
+
     }
 
 
