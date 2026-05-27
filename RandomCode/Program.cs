@@ -21,10 +21,10 @@ namespace RandomCode
             LinkedListTester.Print(head1);
             LinkedListTester.Print(head2);
 
-            var result = new Solution().MergeTwoLists(head1, head2);
-
-            Console.WriteLine("After:");
-            LinkedListTester.Print(result);
+            var result = new Solution().HasCycle(head1);
+            Console.WriteLine(result);
+            //Console.WriteLine("After:");
+            //LinkedListTester.Print(result);
         }
         #region LinkedLists
 
@@ -67,6 +67,22 @@ namespace RandomCode
                     MovingNode.next = list1;
 
                 return StartNode.next;
+            }
+
+            public bool HasCycle(ListNode head)
+            {
+                ListNode slow = head;
+                ListNode fast = head;
+                while (fast!=null && fast.next!=null)
+                {
+                    slow = slow.next;
+                    fast = fast.next.next;
+                    if(slow==fast)
+                        return true;
+
+                }
+                return false;
+
             }
         }
 
